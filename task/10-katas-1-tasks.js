@@ -17,8 +17,35 @@
  *  ]
  */
 function createCompassPoints() {
-    throw new Error('Not implemented');
+
     var sides = ['N','E','S','W'];  // use array of cardinal directions only!
+    var side = 0;
+    while(side < sides.length) {
+        var s1 = sides[side];
+        var s2 = sides[(side+1)%sides.length];
+        if((sides.length-side)%2 == 0) sides.splice(side+1, 0, s1+s2);
+        else sides.splice(side+1, 0, s2+s1);
+        side = side+2;
+    }
+    side = 0;
+    while(side < sides.length){
+        let s1 = sides[side];
+        let s2 = sides[(side+1)%sides.length];
+        if(s1.length < s2.length) sides.splice(side+1, 0, s1+s2);
+        else sides.splice(side+1, 0, s2+s1);
+        side = side+2;
+    }
+    side = 0;
+    while(side < sides.length){
+        let s1 = sides[side];
+        let s2 = sides[(side+1)%sides.length];
+        if(s1.length < s2.length) sides.splice(side+1, 0, s1+'b'+s2.replace(new RegExp(s1, "g"), ""));
+        else sides.splice(side+1, 0, s2+'b'+s1.replace(new RegExp(s2, "g"), ""));
+        side = side+2;
+    }
+    return sides.map(function(current, currentIndex){
+        return { abbreviation : current,   azimuth : currentIndex*11.25 };
+    });
 }
 
 
@@ -127,7 +154,7 @@ function canDominoesMakeRow(dominoes) {
  *     The range syntax is to be used only for, and for every range that expands to more than two values.
  *
  * @params {array} nums
- * @return {bool}
+ * @return {string}
  *
  * @example
  *
@@ -137,7 +164,9 @@ function canDominoesMakeRow(dominoes) {
  * [ 1, 2, 4, 5]          => '1,2,4,5'
  */
 function extractRanges(nums) {
-    throw new Error('Not implemented');
+if(nums.length>4){return nums.splice(1,1).join("-");}
+else{}
+
 }
 
 module.exports = {
